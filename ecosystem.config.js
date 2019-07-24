@@ -9,6 +9,7 @@ module.exports = {
     },
     env_production: {
       NODE_ENV: "production",
+      DEBUG: "sorteador:*"
     }
   }]
 }
