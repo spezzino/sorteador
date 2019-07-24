@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h2 Participantes
+  table
+    tr
+      th Nombre
+      th Su amigo invisible es
+    each val in results
+      tr
+        td= val.from.name
+        td= val.to.name
+
+  h5 Código del sorteo: #{shuffleId}

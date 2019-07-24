@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h2 Participantes
+  table
+    tr
+      th Nombre
+      th Email
+    each val in names
+      tr
+        td= val.name
+        td= val.email
+
+  form(action='/shuffle', method='post')
+    input(type='hidden', name='md5' value=md5)
+    input(type='submit', value='Sortear!')
