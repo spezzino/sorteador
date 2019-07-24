@@ -11,6 +11,6 @@ block content
         td= val.name
         td= val.email
 
-  form(action='/shuffle', method='post')
+  form(action='./shuffle', method='post')
     input(type='hidden', name='md5' value=md5)
     input(type='submit', value='Sortear!')
