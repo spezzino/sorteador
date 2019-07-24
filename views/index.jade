@@ -6,7 +6,7 @@ block content
   p Formato:
   pre nombre, email<br>nombre, email
 
-  form(action='./upload', method='post', encType='multipart/form-data')
+  form(action='/upload', method='post', encType='multipart/form-data')
     input(type='file', name='csv', required='required')
     <br><br>
     input(type='submit', value='Cargar participantes')

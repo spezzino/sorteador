@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
 router.post('/upload', function(req, res, next) {
   const fileName = req.files.csv.md5;
   req.files.csv.mv('./uploads/'+fileName, function() {
-    res.redirect('./preview/'+fileName);
+    res.redirect('/preview/'+fileName);
   });
 });
 
