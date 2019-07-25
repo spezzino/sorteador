@@ -1,8 +1,10 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const basicAuth = require('express-basic-auth');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,6 +12,12 @@ var usersRouter = require('./routes/users');
 const fileUpload = require('express-fileupload');
 
 var app = express();
+
+app.use(basicAuth({
+    users: { 'admin': 'supersecret' },
+    challenge: true,
+    realm: 'sorteador',
+}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

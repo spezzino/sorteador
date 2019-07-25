@@ -1,7 +1,10 @@
 var express = require('express');
 var fs = require('fs');
 var uuid = require('uuid/v4');
+var axios = require('axios');
+var querystring = require('querystring');
 var router = express.Router();
+
 
 var shuffle = function (array) {
 
@@ -56,19 +59,41 @@ router.post('/shuffle', function(req, res, next) {
   	});
   	shuffle(names);
   	const results = [];
+    const mailPromises = [];
   	let giver = names.pop();
   	results.push({to: giver, from: names[0]});
+    mailPromises.push(axios.post('https://sendy.bulk-mail.xyz/subscribe',
+        querystring.stringify({
+          name: names[0].name,
+          email: names[0].email,
+          amigo: giver.name,
+          list: process.env.SENDY_LIST
+        })
+      ));
   	while(names.length>0){
   	  let receiver = names.pop();
   	  results.push({from: giver, to: receiver});
+
+      mailPromises.push(axios.post('https://sendy.bulk-mail.xyz/subscribe',
+        querystring.stringify({
+          name: giver.name,
+          email: giver.email,
+          amigo: receiver.name,
+          list: process.env.SENDY_LIST
+        })
+      ));
+
   	  giver = receiver;
   	}
+    
+    Promise.all(mailPromises)
+    .then((res) => console.log('mails enviados'))
+    .catch((err) => console.err(err));
 
   	const shuffleId = uuid();
   	fs.writeFile('./uploads/'+shuffleId, JSON.stringify(results), () => {
   	  res.render('results', { results, shuffleId });
   	});
-
   });
 });
 
