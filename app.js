@@ -14,7 +14,7 @@ const fileUpload = require('express-fileupload');
 var app = express();
 
 app.use(basicAuth({
-    users: { 'admin': 'supersecret' },
+    users: { `process.env.USER`: process.env.PASSWORD },
     challenge: true,
     realm: 'sorteador',
 }))
